@@ -1,0 +1,26 @@
+{
+  "name": "healthcare-ai-backend",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node --watch src/server.js",
+    "dev:tunnel": "node scripts/tunnel-dev.js",
+    "start": "node src/server.js",
+    "test": "node src/tests/run-tests.js"
+  },
+  "dependencies": {
+    "cloudflared": "^0.7.1",
+    "cors": "^2.8.5",
+    "dayjs": "^1.11.13",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.2",
+    "express-rate-limit": "^8.3.1",
+    "localtunnel": "^2.0.2",
+    "nodemailer": "^6.9.16",
+    "openai": "^4.104.0",
+    "twilio": "^5.4.4",
+    "uuid": "^11.1.0",
+    "zod": "^3.24.1"
+  }
+}

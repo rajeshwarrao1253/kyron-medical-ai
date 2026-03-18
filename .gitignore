@@ -1,0 +1,25 @@
+# Environment variables — never commit secrets
+backend/.env
+frontend/.env.local
+**/.env.local
+**/.env.*.local
+
+# Dependencies
+node_modules/
+**/node_modules/
+
+# Next.js build output
+frontend/.next/
+frontend/out/
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
