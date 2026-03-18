@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+
+const uuid = () => Math.random().toString(36).slice(2) + Date.now().toString(36);
 import { motion, AnimatePresence } from "framer-motion";
 import ChatComposer from "../components/chat/ChatComposer";
 import MessageBubble from "../components/chat/MessageBubble";
@@ -66,7 +68,7 @@ export default function HomePage() {
   // ── send a chat message ──────────────────────────────────────────
   async function handleSend(text) {
     setLoading(true);
-    setMessages(prev => [...prev, { id: crypto.randomUUID(), role: "user", content: text }]);
+    setMessages(prev => [...prev, { id: uuid(), role: "user", content: text }]);
     setSlots([]);
     setAppointment(null);
 
@@ -76,14 +78,14 @@ export default function HomePage() {
       if (data.collectedData) setCollectedData(data.collectedData);
       if (data.slots?.length)  setSlots(data.slots);
 
-      const tempId = crypto.randomUUID();
+      const tempId = uuid();
       setMessages(prev => [...prev, { id: tempId, role: "assistant", content: "" }]);
       await streamText(data.message, (partial) => {
         setMessages(prev => prev.map(m => m.id === tempId ? { ...m, content: partial } : m));
       });
     } catch (error) {
       setMessages(prev => [...prev, {
-        id: crypto.randomUUID(), role: "assistant",
+        id: uuid(), role: "assistant",
         content: "I'm having trouble connecting right now. Please try again in a moment."
       }]);
     } finally {
@@ -101,12 +103,12 @@ export default function HomePage() {
       setSlots([]);
       const label = slot.label;
       setMessages(prev => [...prev, {
-        id: crypto.randomUUID(), role: "assistant",
+        id: uuid(), role: "assistant",
         content: `Your appointment is confirmed for ${label} with ${matchedDoctor.name}. A confirmation has been sent to your email.`
       }]);
     } catch (error) {
       setMessages(prev => [...prev, {
-        id: crypto.randomUUID(), role: "assistant",
+        id: uuid(), role: "assistant",
         content: error.message || "Unable to book that slot. Please choose another time."
       }]);
     } finally {
@@ -134,18 +136,18 @@ export default function HomePage() {
       const result = await continueOnCall();
       if (!result.success) {
         setMessages(prev => [...prev, {
-          id: crypto.randomUUID(), role: "assistant", content: result.message
+          id: uuid(), role: "assistant", content: result.message
         }]);
         setCallStatus("");
         return;
       }
       const msg = result.result?.message || "Your call is being connected. Our AI will pick up where we left off.";
       setCallStatus(msg);
-      setMessages(prev => [...prev, { id: crypto.randomUUID(), role: "assistant", content: msg }]);
+      setMessages(prev => [...prev, { id: uuid(), role: "assistant", content: msg }]);
     } catch (error) {
       setCallStatus("");
       setMessages(prev => [...prev, {
-        id: crypto.randomUUID(), role: "assistant", content: error.message
+        id: uuid(), role: "assistant", content: error.message
       }]);
     }
   }
@@ -243,6 +245,14 @@ export default function HomePage() {
                   </motion.span>
                 )}
               </AnimatePresence>
+              <button
+                className="reset-btn"
+                type="button"
+                onClick={handleReset}
+                title="Start a new conversation"
+              >
+                Start Over
+              </button>
               <button
                 className="call-btn"
                 type="button"

@@ -405,6 +405,20 @@ body::after {
 }
 .call-btn svg { width: 15px; height: 15px; flex-shrink: 0; }
 
+/* ─── Reset button ───────────────────────────────────────────────── */
+.reset-btn {
+  padding: 7px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.06);
+  color: #64748b;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+.reset-btn:hover { background: rgba(255,255,255,0.11); color: #94a3b8; }
+
 /* ─── Slot picker ────────────────────────────────────────────────── */
 .slot-section { margin-top: 6px; }
 .slot-section-label {
